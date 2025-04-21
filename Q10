@@ -1,0 +1,109 @@
+// Step 1: Public members
+class Employee {
+public:
+    int age;
+    int yearsOfService;
+    double salary;
+};
+// Step 2: Encapsulated version
+class Employee {
+private:
+    int age;
+    int yearsOfService;
+    double salary;
+
+public:
+    // Setters
+    void setAge(int a) { age = a; }
+    void setYearsOfService(int y) { yearsOfService = y; }
+    void setSalary(double s) { salary = s; }
+
+    // Getters
+    int getAge() const { return age; }
+    int getYearsOfService() const { return yearsOfService; }
+    double getSalary() const { return salary; }
+};
+#include <iostream>
+using namespace std;
+
+class Employee {
+private:
+    int age;
+    int yearsOfService;
+    double salary;
+
+public:
+    void setAge(int a) { age = a; }
+    void setYearsOfService(int y) { yearsOfService = y; }
+    void setSalary(double s) { salary = s; }
+
+    int getAge() const { return age; }
+    int getYearsOfService() const { return yearsOfService; }
+    double getSalary() const { return salary; }
+};
+
+int main() {
+    Employee emp1, emp2;
+
+    emp1.setAge(30);
+    emp1.setYearsOfService(5);
+    emp1.setSalary(55000.50);
+
+    emp2.setAge(45);
+    emp2.setYearsOfService(20);
+    emp2.setSalary(92000.75);
+
+    cout << "Employee 1:\nAge: " << emp1.getAge()
+         << "\nYears of Service: " << emp1.getYearsOfService()
+         << "\nSalary: $" << emp1.getSalary() << "\n";
+
+    cout << "\nEmployee 2:\nAge: " << emp2.getAge()
+         << "\nYears of Service: " << emp2.getYearsOfService()
+         << "\nSalary: $" << emp2.getSalary() << "\n";
+
+    return 0;
+}
+int getSalaryInThousands() const {
+    return static_cast<int>((salary + 500) / 1000); // Rounded to nearest 1000
+}
+class Employee {
+private:
+    int age;
+    int yearsOfService;
+    double salary;
+
+public:
+    void setAge(int a) { age = a; }
+    void setYearsOfService(int y) { yearsOfService = y; }
+    void setSalary(double s) { salary = s; }
+
+    int getAge() const { return age; }
+    int getYearsOfService() const { return yearsOfService; }
+    double getSalary() const { return salary; }
+
+    int getSalaryInThousands() const {
+        return static_cast<int>((salary + 500) / 1000); // rounding
+    }
+};
+class Employee {
+private:
+    int age;
+    int yearsOfService;
+    double salary;
+
+public:
+    // Constructor
+    Employee(int a, int y, double s) {
+        age = a;
+        yearsOfService = y;
+        salary = s;
+    }
+
+    int getAge() const { return age; }
+    int getYearsOfService() const { return yearsOfService; }
+    double getSalary() const { return salary; }
+
+    int getSalaryInThousands() const {
+        return static_cast<int>((salary + 500) / 1000);
+    }
+};
