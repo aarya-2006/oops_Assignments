@@ -1,0 +1,148 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Base class Vehicle
+class Vehicle {
+protected:
+    float mileage;
+    float price;
+
+public:
+    Vehicle(float m, float p) : mileage(m), price(p) {}
+
+    void displayInfo() {
+        cout << "Mileage: " << mileage << " km/l" << endl;
+        cout << "Price: $" << price << endl;
+    }
+};
+
+// Car class derived from Vehicle
+class Car : public Vehicle {
+protected:
+    float ownershipCost;
+    int warranty;  // in years
+    int seatingCapacity;
+    string fuelType;
+
+public:
+    Car(float m, float p, float o, int w, int s, string f)
+        : Vehicle(m, p), ownershipCost(o), warranty(w), seatingCapacity(s), fuelType(f) {}
+
+    void displayInfo() {
+        Vehicle::displayInfo();
+        cout << "Ownership Cost: $" << ownershipCost << endl;
+        cout << "Warranty: " << warranty << " years" << endl;
+        cout << "Seating Capacity: " << seatingCapacity << endl;
+        cout << "Fuel Type: " << fuelType << endl;
+    }
+};
+
+// Bike class derived from Vehicle
+class Bike : public Vehicle {
+protected:
+    int numCylinders;
+    int numGears;
+    string coolingType;
+    string wheelType;
+    float fuelTankSize;  // in inches
+
+public:
+    Bike(float m, float p, int c, int g, string co, string w, float f)
+        : Vehicle(m, p), numCylinders(c), numGears(g), coolingType(co), wheelType(w), fuelTankSize(f) {}
+
+    void displayInfo() {
+        Vehicle::displayInfo();
+        cout << "Number of Cylinders: " << numCylinders << endl;
+        cout << "Number of Gears: " << numGears << endl;
+        cout << "Cooling Type: " << coolingType << endl;
+        cout << "Wheel Type: " << wheelType << endl;
+        cout << "Fuel Tank Size: " << fuelTankSize << " inches" << endl;
+    }
+};
+
+// Audi class derived from Car
+class Audi : public Car {
+private:
+    string modelType;
+
+public:
+    Audi(float m, float p, float o, int w, int s, string f, string model)
+        : Car(m, p, o, w, s, f), modelType(model) {}
+
+    void displayInfo() {
+        cout << "Audi Model: " << modelType << endl;
+        Car::displayInfo();
+    }
+};
+
+// Ford class derived from Car
+class Ford : public Car {
+private:
+    string modelType;
+
+public:
+    Ford(float m, float p, float o, int w, int s, string f, string model)
+        : Car(m, p, o, w, s, f), modelType(model) {}
+
+    void displayInfo() {
+        cout << "Ford Model: " << modelType << endl;
+        Car::displayInfo();
+    }
+};
+
+// Bajaj class derived from Bike
+class Bajaj : public Bike {
+private:
+    string makeType;
+
+public:
+    Bajaj(float m, float p, int c, int g, string co, string w, float f, string make)
+        : Bike(m, p, c, g, co, w, f), makeType(make) {}
+
+    void displayInfo() {
+        cout << "Bajaj Make: " << makeType << endl;
+        Bike::displayInfo();
+    }
+};
+
+// TVS class derived from Bike
+class TVS : public Bike {
+private:
+    string makeType;
+
+public:
+    TVS(float m, float p, int c, int g, string co, string w, float f, string make)
+        : Bike(m, p, c, g, co, w, f), makeType(make) {}
+
+    void displayInfo() {
+        cout << "TVS Make: " << makeType << endl;
+        Bike::displayInfo();
+    }
+};
+
+int main() {
+    // Creating objects for Audi and Ford cars
+    Audi audi(15.0, 30000, 5000, 5, 4, "Petrol", "A4");
+    Ford ford(12.0, 25000, 4000, 3, 5, "Diesel", "Focus");
+
+    // Creating objects for Bajaj and TVS bikes
+    Bajaj bajaj(40.0, 1500, 2, 5, "Air", "Alloys", 15.0, "Pulsar");
+    TVS tvs(35.0, 1200, 1, 5, "Liquid", "Spokes", 12.0, "Apache");
+
+    // Display information for Audi and Ford cars
+    cout << "\n--- Audi Car Details ---\n";
+    audi.displayInfo();
+
+    cout << "\n--- Ford Car Details ---\n";
+    ford.displayInfo();
+
+    // Display information for Bajaj and TVS bikes
+    cout << "\n--- Bajaj Bike Details ---\n";
+    bajaj.displayInfo();
+
+    cout << "\n--- TVS Bike Details ---\n";
+    tvs.displayInfo();
+
+    return 0;
+}
