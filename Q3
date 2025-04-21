@@ -1,0 +1,119 @@
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+// Base class: Person
+class Person {
+protected:
+    string name;
+    int age;
+
+public:
+    // Constructor to initialize name and age
+    Person(string n, int a) : name(n), age(a) {}
+
+    // Function to display personal details
+    void displayDetails() {
+        cout << "Name: " << name << ", Age: " << age << endl;
+    }
+};
+
+// Derived class: Employee (from Person)
+class Employee : public Person {
+protected:
+    string empID;
+    string designation;
+
+public:
+    // Constructor to initialize Employee details
+    Employee(string n, int a, string id, string desig) : Person(n, a), empID(id), designation(desig) {}
+
+    // Function to display Employee details
+    void displayDetails() {
+        Person::displayDetails();
+        cout << "Employee ID: " << empID << ", Designation: " << designation << endl;
+    }
+};
+
+// Derived class: TeachingStaff (from Employee)
+class TeachingStaff : public Employee {
+protected:
+    string subject;
+    string qualification;
+
+public:
+    // Constructor to initialize TeachingStaff details
+    TeachingStaff(string n, int a, string id, string desig, string sub, string qual)
+        : Employee(n, a, id, desig), subject(sub), qualification(qual) {}
+
+    // Function to display TeachingStaff details
+    void displayDetails() {
+        Employee::displayDetails();
+        cout << "Subject: " << subject << ", Qualification: " << qualification << endl;
+    }
+};
+
+// Derived class: NonTeachingStaff (from Employee)
+class NonTeachingStaff : public Employee {
+protected:
+    string department;
+    string role;
+
+public:
+    // Constructor to initialize NonTeachingStaff details
+    NonTeachingStaff(string n, int a, string id, string desig, string dept, string r)
+        : Employee(n, a, id, desig), department(dept), role(r) {}
+
+    // Function to display NonTeachingStaff details
+    void displayDetails() {
+        Employee::displayDetails();
+        cout << "Department: " << department << ", Role: " << role << endl;
+    }
+};
+
+// Derived class: AdminStaff (from NonTeachingStaff)
+class AdminStaff : public NonTeachingStaff {
+protected:
+    string adminRole;
+
+public:
+    // Constructor to initialize AdminStaff details
+    AdminStaff(string n, int a, string id, string desig, string dept, string r, string adminR)
+        : NonTeachingStaff(n, a, id, desig, dept, r), adminRole(adminR) {}
+
+    // Function to display AdminStaff details
+    void displayDetails() {
+        NonTeachingStaff::displayDetails();
+        cout << "Admin Role: " << adminRole << endl;
+    }
+};
+
+int main() {
+    // Creating a vector to store different types of employees
+    vector<Employee*> employeeDatabase;
+
+    // Adding TeachingStaff to the database
+    employeeDatabase.push_back(new TeachingStaff("Alice", 30, "T101", "Professor", "Physics", "PhD"));
+    employeeDatabase.push_back(new TeachingStaff("Bob", 35, "T102", "Assistant Professor", "Mathematics", "MSc"));
+
+    // Adding NonTeachingStaff to the database
+    employeeDatabase.push_back(new NonTeachingStaff("Charlie", 40, "NT101", "Lab Assistant", "Science", "Lab Technician"));
+    
+    // Adding AdminStaff to the database
+    employeeDatabase.push_back(new AdminStaff("Diana", 45, "A101", "Office Manager", "Administration", "Admin Staff", "HR"));
+    
+    // Displaying all employee details
+    cout << "Employee Database:\n";
+    for (auto emp : employeeDatabase) {
+        emp->displayDetails();
+        cout << endl;
+    }
+
+    // Cleaning up memory
+    for (auto emp : employeeDatabase) {
+        delete emp;
+    }
+
+    return 0;
+}
