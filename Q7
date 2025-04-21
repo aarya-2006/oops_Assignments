@@ -1,0 +1,103 @@
+// SimpleCircle.h
+class SimpleCircle {
+private:
+    int itsRadius;
+
+public:
+    // Constructors and Destructor
+    SimpleCircle();                  // Default constructor
+    SimpleCircle(int radius);       // Parameterized constructor
+    SimpleCircle(const SimpleCircle& other); // Copy constructor
+    ~SimpleCircle();                // Destructor
+
+    // Accessor
+    int getRadius() const;
+
+    // Overloaded Operators
+    SimpleCircle& operator++();      // Prefix increment
+    SimpleCircle operator++(int);    // Postfix increment
+    SimpleCircle& operator=(const SimpleCircle& rhs); // Assignment operator
+};
+SimpleCircle::SimpleCircle() : itsRadius(5) {
+    // Constructor body (optional)
+}
+SimpleCircle::SimpleCircle(int radius) : itsRadius(radius) {
+    // Constructor body (optional)
+}
+// Prefix: ++circle
+SimpleCircle& SimpleCircle::operator++() {
+    ++itsRadius;
+    return *this;
+}
+
+// Postfix: circle++
+SimpleCircle SimpleCircle::operator++(int) {
+    SimpleCircle temp = *this;
+    itsRadius++;
+    return temp;
+}
+SimpleCircle::SimpleCircle(const SimpleCircle& other) {
+    itsRadius = other.itsRadius;
+}
+SimpleCircle& SimpleCircle::operator=(const SimpleCircle& rhs) {
+    if (this != &rhs) {
+        itsRadius = rhs.itsRadius;
+    }
+    return *this;
+}
+#include <iostream>
+using namespace std;
+
+// Include full class definition here (or assume it's included from a header)
+class SimpleCircle {
+private:
+    int itsRadius;
+
+public:
+    SimpleCircle() : itsRadius(5) {}
+    SimpleCircle(int radius) : itsRadius(radius) {}
+    SimpleCircle(const SimpleCircle& other) {
+        itsRadius = other.itsRadius;
+    }
+    ~SimpleCircle() {}
+
+    int getRadius() const {
+        return itsRadius;
+    }
+
+    // Overloaded increment operators
+    SimpleCircle& operator++() {
+        ++itsRadius;
+        return *this;
+    }
+
+    SimpleCircle operator++(int) {
+        SimpleCircle temp = *this;
+        itsRadius++;
+        return temp;
+    }
+
+    SimpleCircle& operator=(const SimpleCircle& rhs) {
+        if (this != &rhs) {
+            itsRadius = rhs.itsRadius;
+        }
+        return *this;
+    }
+};
+
+int main() {
+    SimpleCircle c1;        // Default constructor, radius = 5
+    SimpleCircle c2(9);     // Parameterized constructor
+
+    ++c1;                   // Prefix increment
+    c2++;                   // Postfix increment
+
+    cout << "c1 radius after increment: " << c1.getRadius() << endl; // 6
+    cout << "c2 radius after increment: " << c2.getRadius() << endl; // 10
+
+    c1 = c2;                // Assignment
+
+    cout << "c1 radius after assignment: " << c1.getRadius() << endl; // 10
+
+    return 0;
+}
