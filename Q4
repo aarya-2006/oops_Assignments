@@ -1,0 +1,104 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Base class
+class Person {
+protected:
+    string name;
+    int age;
+
+public:
+    void getPersonInfo() {
+        cout << "Enter name: ";
+        getline(cin, name);
+        cout << "Enter age: ";
+        cin >> age;
+        cin.ignore(); // Clear newline from buffer
+    }
+
+    void displayPersonInfo() const {
+        cout << "Name: " << name << endl;
+        cout << "Age: " << age << endl;
+    }
+};
+
+// Derived from Person
+class Account : virtual public Person {
+protected:
+    float salary;
+
+public:
+    void getAccountInfo() {
+        cout << "Enter salary: ";
+        cin >> salary;
+    }
+
+    void displayAccountInfo() const {
+        cout << "Salary: $" << salary << endl;
+    }
+};
+
+// Also derived from Person
+class Admin : virtual public Person {
+protected:
+    string department;
+
+public:
+    void getAdminInfo() {
+        cout << "Enter department: ";
+        cin.ignore();
+        getline(cin, department);
+    }
+
+    void displayAdminInfo() const {
+        cout << "Department: " << department << endl;
+    }
+};
+
+// Derived from both Account and Admin
+class Master : public Account, public Admin {
+public:
+    void create() {
+        getPersonInfo();
+        getAccountInfo();
+        getAdminInfo();
+    }
+
+    void update() {
+        cout << "\n--- Update Info ---" << endl;
+        getPersonInfo();
+        getAccountInfo();
+        getAdminInfo();
+    }
+
+    void display() const {
+        cout << "\n--- Master Record ---" << endl;
+        displayPersonInfo();
+        displayAccountInfo();
+        displayAdminInfo();
+    }
+};
+
+// Example usage
+int main() {
+    Master m;
+
+    // Create master record
+    cout << "Enter Master record information:\n";
+    m.create();
+
+    // Display master record
+    m.display();
+
+    // Update master record
+    char choice;
+    cout << "\nDo you want to update the record? (y/n): ";
+    cin >> choice;
+    if (choice == 'y' || choice == 'Y') {
+        m.update();
+        m.display();
+    }
+
+    return 0;
+}
