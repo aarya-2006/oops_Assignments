@@ -1,0 +1,84 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Performance {
+private:
+    string time;
+    int totalSeats;
+    int bookedSeats;
+
+public:
+    Performance(string t, int seats = 100) {
+        time = t;
+        totalSeats = seats;
+        bookedSeats = 0;
+    }
+
+    bool bookSeats(int count) {
+        if (bookedSeats + count <= totalSeats) {
+            bookedSeats += count;
+            cout << count << " seat(s) successfully booked for " << time << " show.\n";
+            return true;
+        } else {
+            cout << "Only " << (totalSeats - bookedSeats) << " seat(s) left for " << time << " show.\n";
+            return false;
+        }
+    }
+
+    void displayAvailability() const {
+        cout << "Seats available for " << time << " show: " 
+             << (totalSeats - bookedSeats) << endl;
+    }
+};
+
+// Utility to get performance choice
+int showMenu() {
+    cout << "\nSelect a show:\n";
+    cout << "1. 1:00 PM\n";
+    cout << "2. 5:00 PM\n";
+    cout << "3. 8:30 PM\n";
+    cout << "0. Exit\n";
+    cout << "Enter choice: ";
+    int choice;
+    cin >> choice;
+    return choice;
+}
+
+int main() {
+    Performance afternoon("1:00 PM");
+    Performance evening("5:00 PM");
+    Performance night("8:30 PM");
+
+    int choice;
+    do {
+        choice = showMenu();
+
+        Performance* selected = nullptr;
+        switch (choice) {
+            case 1: selected = &afternoon; break;
+            case 2: selected = &evening; break;
+            case 3: selected = &night; break;
+            case 0: cout << "Exiting program.\n"; continue;
+            default: cout << "Invalid choice.\n"; continue;
+        }
+
+        cout << "1. Book seats\n2. Check availability\nChoose an action: ";
+        int action;
+        cin >> action;
+
+        if (action == 1) {
+            int seats;
+            cout << "Enter number of seats to book: ";
+            cin >> seats;
+            selected->bookSeats(seats);
+        } else if (action == 2) {
+            selected->displayAvailability();
+        } else {
+            cout << "Invalid action.\n";
+        }
+
+    } while (choice != 0);
+
+    return 0;
+}
