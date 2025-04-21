@@ -1,0 +1,52 @@
+#include <iostream>
+using namespace std;
+
+// Mammals class
+class Mammals {
+public:
+    void printMammal() {
+        cout << "I am a mammal" << endl;
+    }
+};
+
+// MarineAnimals class
+class MarineAnimals {
+public:
+    void printMarineAnimal() {
+        cout << "I am a marine animal" << endl;
+    }
+};
+
+// BlueWhale class inherits both Mammals and MarineAnimals
+class BlueWhale : public Mammals, public MarineAnimals {
+public:
+    void printBlueWhale() {
+        cout << "I belong to both the categories: Mammals as well as Marine Animals" << endl;
+    }
+};
+
+int main() {
+    // Creating objects of each class
+    Mammals mammal;
+    MarineAnimals marineAnimal;
+    BlueWhale blueWhale;
+
+    // 1. Calling function of Mammals class by its object
+    cout << "From Mammal object: ";
+    mammal.printMammal();
+
+    // 2. Calling function of MarineAnimals class by its object
+    cout << "From MarineAnimal object: ";
+    marineAnimal.printMarineAnimal();
+
+    // 3. Calling function of BlueWhale class by its object
+    cout << "From BlueWhale object: ";
+    blueWhale.printBlueWhale();
+
+    // 4. Calling function of each parent class using BlueWhale object
+    cout << "From BlueWhale object (calling parents' methods):" << endl;
+    blueWhale.printMammal();        // Calling Mammals class method
+    blueWhale.printMarineAnimal();  // Calling MarineAnimals class method
+
+    return 0;
+}
