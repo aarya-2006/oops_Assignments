@@ -1,0 +1,161 @@
+#include <iostream>
+#include <vector>
+#include <map>
+using namespace std;
+
+enum Status { ON_SHELF, ON_LOAN, RESERVED, MISSING };
+
+class Book {
+private:
+    int classMark;
+    Status status;
+
+public:
+    Book(int mark) {
+        classMark = mark;
+        status = ON_SHELF;
+    }
+
+    int getClassMark() const {
+        return classMark;
+    }
+
+    Status getStatus() const {
+        return status;
+    }
+
+    void loan() {
+        if (status == ON_SHELF) {
+            status = ON_LOAN;
+            cout << "Book " << classMark << " has been checked out.\n";
+        } else {
+            cout << "Book " << classMark << " is not available for loan.\n";
+        }
+    }
+
+    void reserve() {
+        if (status == ON_LOAN) {
+            status = RESERVED;
+            cout << "Book " << classMark << " has been reserved.\n";
+        } else {
+            cout << "Book " << classMark << " cannot be reserved.\n";
+        }
+    }
+
+    void markMissing() {
+        status = MISSING;
+        cout << "Book " << classMark << " marked as missing.\n";
+    }
+
+    void inquire() const {
+        cout << "Book " << classMark << " status: ";
+        switch (status) {
+            case ON_SHELF: cout << "On Shelf\n"; break;
+            case ON_LOAN: cout << "On Loan\n"; break;
+            case RESERVED: cout << "Reserved\n"; break;
+            case MISSING: cout << "Missing\n"; break;
+        }
+    }
+};
+
+// Function to print summary
+void printSummary(const vector<Book>& library) {
+    int onLoan = 0, reserved = 0, onShelf = 0, missing = 0;
+    for (const Book& book : library) {
+        switch (book.getStatus()) {
+            case ON_LOAN: onLoan++; break;
+            case RESERVED: reserved++; break;
+            case ON_SHELF: onShelf++; break;
+            case MISSING: missing++; break;
+        }
+    }
+    cout << "\n--- Library Summary ---\n";
+    cout << "Total books: " << library.size() << "\n";
+    cout << "Books on loan: " << onLoan << "\n";
+    cout << "Books reserved: " << reserved << "\n";
+    cout << "Books on shelves: " << onShelf << "\n";
+    cout << "Books missing: " << missing << "\n";
+}
+
+int main() {
+    vector<Book> library;
+
+    // Preload some books
+    for (int i = 1; i <= 100; i++) {
+        library.push_back(Book(i)); // Class marks 1 to 100
+    }
+
+    int choice;
+    do {
+        cout << "\n--- School Library System ---\n";
+        cout << "1. Loan a Book\n";
+        cout << "2. Reserve a Book\n";
+        cout << "3. Inquire Book Status\n";
+        cout << "4. Mark Book Missing\n";
+        cout << "5. Show Summary\n";
+        cout << "0. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        int mark;
+        switch (choice) {
+            case 1:
+                cout << "Enter class mark to loan: ";
+                cin >> mark;
+                for (Book& b : library) {
+                    if (b.getClassMark() == mark) {
+                        b.loan();
+                        break;
+                    }
+                }
+                break;
+
+            case 2:
+                cout << "Enter class mark to reserve: ";
+                cin >> mark;
+                for (Book& b : library) {
+                    if (b.getClassMark() == mark) {
+                        b.reserve();
+                        break;
+                    }
+                }
+                break;
+
+            case 3:
+                cout << "Enter class mark to inquire: ";
+                cin >> mark;
+                for (const Book& b : library) {
+                    if (b.getClassMark() == mark) {
+                        b.inquire();
+                        break;
+                    }
+                }
+                break;
+
+            case 4:
+                cout << "Enter class mark to mark as missing: ";
+                cin >> mark;
+                for (Book& b : library) {
+                    if (b.getClassMark() == mark) {
+                        b.markMissing();
+                        break;
+                    }
+                }
+                break;
+
+            case 5:
+                printSummary(library);
+                break;
+
+            case 0:
+                cout << "Goodbye!\n";
+                break;
+
+            default:
+                cout << "Invalid choice. Try again.\n";
+        }
+
+    } while (choice != 0);
+
+    return 0;
+}
