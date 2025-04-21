@@ -1,0 +1,102 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+using namespace std;
+
+class Account {
+protected:
+    string customerName;
+    int accountNumber;
+    string accountType;
+    float balance;
+
+public:
+    void initialize(string name, int accNo, string accType, float bal) {
+        customerName = name;
+        accountNumber = accNo;
+        accountType = accType;
+        balance = bal;
+    }
+
+    void deposit(float amount) {
+        balance += amount;
+        cout << "Amount deposited successfully.\n";
+    }
+
+    void displayBalance() const {
+        cout << "Account Holder: " << customerName << endl;
+        cout << "Account Number: " << accountNumber << endl;
+        cout << "Account Type: " << accountType << endl;
+        cout << "Current Balance: $" << balance << endl;
+    }
+
+    float getBalance() const {
+        return balance;
+    }
+
+    void withdraw(float amount) {
+        if (amount > balance) {
+            cout << "Insufficient balance!" << endl;
+        } else {
+            balance -= amount;
+            cout << "Withdrawal successful." << endl;
+        }
+    }
+
+    void updateBalance(float newBalance) {
+        balance = newBalance;
+    }
+};
+
+// Savings Account
+class SavAcct : public Account {
+public:
+    void computeInterest(float rate, int timeInYears) {
+        float interest = balance * pow((1 + rate / 100), timeInYears) - balance;
+        cout << "Interest of $" << interest << " added to your savings account.\n";
+        deposit(interest);
+    }
+};
+
+// Current Account
+class CurAcct : public Account {
+    const float minBalance = 500.0;
+    const float serviceCharge = 50.0;
+
+public:
+    void checkMinBalance() {
+        if (balance < minBalance) {
+            cout << "Balance below minimum. Imposing service charge of $" << serviceCharge << endl;
+            if (balance > serviceCharge)
+                balance -= serviceCharge;
+            else
+                balance = 0;
+        } else {
+            cout << "Minimum balance maintained.\n";
+        }
+    }
+};
+
+// Example usage
+int main() {
+    SavAcct savings;
+    CurAcct current;
+
+    // Initializing Savings Account
+    savings.initialize("Alice", 1001, "Savings", 1000.0);
+    savings.deposit(500);
+    savings.computeInterest(5.0, 2); // 5% rate for 2 years
+    savings.withdraw(300);
+    savings.displayBalance();
+
+    cout << "\n";
+
+    // Initializing Current Account
+    current.initialize("Bob", 2001, "Current", 400.0);
+    current.deposit(200);
+    current.withdraw(100);
+    current.checkMinBalance();
+    current.displayBalance();
+
+    return 0;
+}
