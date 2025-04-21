@@ -1,0 +1,135 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+// Base class for Marks
+class Marks {
+protected:
+    string name;
+    int rollNo;
+    int totalMarks;
+
+public:
+    Marks(string studentName, int roll) : name(studentName), rollNo(roll), totalMarks(0) {}
+
+    // Function to display the student's information
+    void display() {
+        cout << "Roll Number: " << rollNo << ", Name: " << name << ", Total Marks: " << totalMarks << endl;
+    }
+
+    // Getter for total marks
+    int getTotalMarks() {
+        return totalMarks;
+    }
+
+    // Function to add marks to the total
+    void addMarks(int marks) {
+        totalMarks += marks;
+    }
+};
+
+// Derived class for Physics
+class Physics : public Marks {
+private:
+    int physicsMarks;
+
+public:
+    Physics(string studentName, int roll, int marks) : Marks(studentName, roll), physicsMarks(marks) {
+        addMarks(physicsMarks);
+    }
+
+    // Function to display Physics marks
+    void displayPhysics() {
+        cout << "Physics Marks: " << physicsMarks << endl;
+    }
+};
+
+// Derived class for Chemistry
+class Chemistry : public Marks {
+private:
+    int chemistryMarks;
+
+public:
+    Chemistry(string studentName, int roll, int marks) : Marks(studentName, roll), chemistryMarks(marks) {
+        addMarks(chemistryMarks);
+    }
+
+    // Function to display Chemistry marks
+    void displayChemistry() {
+        cout << "Chemistry Marks: " << chemistryMarks << endl;
+    }
+};
+
+// Derived class for Mathematics
+class Mathematics : public Marks {
+private:
+    int mathMarks;
+
+public:
+    Mathematics(string studentName, int roll, int marks) : Marks(studentName, roll), mathMarks(marks) {
+        addMarks(mathMarks);
+    }
+
+    // Function to display Mathematics marks
+    void displayMathematics() {
+        cout << "Mathematics Marks: " << mathMarks << endl;
+    }
+};
+
+int main() {
+    int numStudents;
+    vector<Marks*> students;
+
+    // Asking the user for the number of students
+    cout << "Enter the number of students in the class: ";
+    cin >> numStudents;
+
+    // Enter details for each student
+    for (int i = 0; i < numStudents; ++i) {
+        string name;
+        int physicsMarks, chemistryMarks, mathMarks;
+
+        // Roll number is generated automatically starting from 1
+        int rollNo = i + 1;
+
+        cout << "\nEnter details for student " << rollNo << ":\n";
+        cout << "Enter Name: ";
+        cin.ignore();  // To clear the buffer
+        getline(cin, name);
+
+        cout << "Enter Physics Marks: ";
+        cin >> physicsMarks;
+        cout << "Enter Chemistry Marks: ";
+        cin >> chemistryMarks;
+        cout << "Enter Mathematics Marks: ";
+        cin >> mathMarks;
+
+        // Creating objects for each subject
+        Physics p(name, rollNo, physicsMarks);
+        Chemistry c(name, rollNo, chemistryMarks);
+        Mathematics m(name, rollNo, mathMarks);
+
+        // Adding the student to the students vector
+        students.push_back(&p);
+        students.push_back(&c);
+        students.push_back(&m);
+
+        // Displaying the student's marks for each subject
+        p.display();
+        p.displayPhysics();
+        c.displayChemistry();
+        m.displayMathematics();
+    }
+
+    // Calculate the average marks of the entire class
+    int totalMarksClass = 0;
+    for (auto student : students) {
+        totalMarksClass += student->getTotalMarks();
+    }
+
+    float averageMarks = totalMarksClass / float(numStudents);
+    cout << "\nThe average marks of the class is: " << averageMarks << endl;
+
+    return 0;
+}
