@@ -1,0 +1,32 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Student class definition
+class Student {
+private:
+    string name;
+
+public:
+    // Constructor with a default parameter
+    Student(string studentName = "Unknown") {
+        name = studentName;
+    }
+
+    // Method to print the student's name
+    void printName() {
+        cout << "Student's Name: " << name << endl;
+    }
+};
+
+int main() {
+    // Creating an object with no name passed
+    Student student1;
+    student1.printName();  // This should print "Unknown"
+
+    // Creating an object with a name passed
+    Student student2("John Doe");
+    student2.printName();  // This should print "John Doe"
+
+    return 0;
+}
