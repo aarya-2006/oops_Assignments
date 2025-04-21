@@ -1,0 +1,69 @@
+#include <iostream>
+using namespace std;
+
+// Base class Shape
+class Shape {
+public:
+    virtual void printMessage() {
+        cout << "This is a shape" << endl;
+    }
+};
+
+// Class Polygon inheriting from Shape
+class Polygon : public Shape {
+public:
+    void printMessage() override {
+        cout << "Polygon is a shape" << endl;
+    }
+};
+
+// Class Rectangle inheriting from Polygon
+class Rectangle : public Polygon {
+public:
+    void printMessage() override {
+        cout << "Rectangle is a polygon" << endl;
+    }
+};
+
+// Class Triangle inheriting from Polygon
+class Triangle : public Polygon {
+public:
+    void printMessage() override {
+        cout << "Triangle is a polygon" << endl;
+    }
+};
+
+// Class Square inheriting from Rectangle
+class Square : public Rectangle {
+public:
+    void printMessage() override {
+        cout << "Square is a rectangle" << endl;
+    }
+};
+
+int main() {
+    // Creating objects of each class
+    Shape shapeObj;
+    Polygon polygonObj;
+    Rectangle rectangleObj;
+    Triangle triangleObj;
+    Square squareObj;
+
+    // Calling the printMessage function for each object
+    cout << "Shape Object: ";
+    shapeObj.printMessage();  // Output: This is a shape
+
+    cout << "Polygon Object: ";
+    polygonObj.printMessage();  // Output: Polygon is a shape
+
+    cout << "Rectangle Object: ";
+    rectangleObj.printMessage();  // Output: Rectangle is a polygon
+
+    cout << "Triangle Object: ";
+    triangleObj.printMessage();  // Output: Triangle is a polygon
+
+    cout << "Square Object: ";
+    squareObj.printMessage();  // Output: Square is a rectangle
+
+    return 0;
+}
