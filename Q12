@@ -1,0 +1,65 @@
+#include <iostream>
+using namespace std;
+
+// Base class Fruit
+class Fruit {
+protected:
+    int totalFruits;  // Data member to track total number of fruits
+
+public:
+    // Constructor to initialize totalFruits to 0
+    Fruit() {
+        totalFruits = 0;
+    }
+
+    // Function to get the total number of fruits
+    int getTotalFruits() {
+        return totalFruits;
+    }
+
+    // Function to add fruits to the basket
+    void addFruits(int number) {
+        totalFruits += number;
+    }
+};
+
+// Derived class Apples
+class Apples : public Fruit {
+public:
+    void addApples(int number) {
+        addFruits(number);  // Add apples to total fruits
+    }
+
+    int getApples() {
+        return totalFruits;  // Return number of apples
+    }
+};
+
+// Derived class Mangoes
+class Mangoes : public Fruit {
+public:
+    void addMangoes(int number) {
+        addFruits(number);  // Add mangoes to total fruits
+    }
+
+    int getMangoes() {
+        return totalFruits;  // Return number of mangoes
+    }
+};
+
+int main() {
+    // Create objects of Apples and Mangoes
+    Apples appleBasket;
+    Mangoes mangoBasket;
+
+    // Adding fruits to the respective baskets
+    appleBasket.addApples(10);  // 10 apples
+    mangoBasket.addMangoes(15); // 15 mangoes
+
+    // Printing the number of apples, mangoes, and total fruits in the basket
+    cout << "Number of apples in the basket: " << appleBasket.getApples() << endl;
+    cout << "Number of mangoes in the basket: " << mangoBasket.getMangoes() << endl;
+    cout << "Total number of fruits in the basket: " << appleBasket.getTotalFruits() + mangoBasket.getTotalFruits() << endl;
+
+    return 0;
+}
